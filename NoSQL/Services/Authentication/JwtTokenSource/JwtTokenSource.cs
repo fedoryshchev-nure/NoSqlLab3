@@ -2,7 +2,9 @@
 using Microsoft.IdentityModel.Tokens;
 using NoSQL.Configurations;
 using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
+using System.Security.Claims;
 
 namespace NoSQL.Services.Authentication.JwtTokenSource
 {
@@ -15,26 +17,25 @@ namespace NoSQL.Services.Authentication.JwtTokenSource
             this.options = options.Value;
         }
 
-        public string Token
+        public string Get(string id)
         {
-            get
-            {
-                var now = DateTime.UtcNow;
-                var expires = now.Add(TimeSpan.FromDays(options.ExpirationDays));
-                var signedKey = new SigningCredentials(options.GetSymmetricSecurityKey,
-                    SecurityAlgorithms.HmacSha256);
+            var now = DateTime.UtcNow;
+            var claims = new List<Claim> { new Claim(ClaimTypes.NameIdentifier, id) };
+            var expires = now.Add(TimeSpan.FromDays(options.ExpirationDays));
+            var signedKey = new SigningCredentials(options.GetSymmetricSecurityKey,
+                SecurityAlgorithms.HmacSha256);
 
-                var jwt = new JwtSecurityToken(
-                        issuer: options.Issuer,
-                        audience: options.Issuer,
-                        notBefore: now,
-                        expires: expires,
-                        signingCredentials: signedKey);
+            var jwt = new JwtSecurityToken(
+                    issuer: options.Issuer,
+                    audience: options.Issuer,
+                    notBefore: now,
+                    expires: expires,
+                    claims: claims,
+                    signingCredentials: signedKey);
 
-                var token = new JwtSecurityTokenHandler().WriteToken(jwt);
+            var token = new JwtSecurityTokenHandler().WriteToken(jwt);
 
-                return token;
-            }
+            return token;
         }
     }
 }

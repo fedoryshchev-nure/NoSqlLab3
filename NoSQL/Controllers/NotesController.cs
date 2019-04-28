@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -38,6 +39,7 @@ namespace NoSQL.Controllers
         public async Task<ActionResult<User>> Post([FromBody]Note note)
         {
             User user = await userManager.GetUserAsync(HttpContext.User);
+            note.Id = Guid.NewGuid().ToString();
             user.Notes.Add(note);
             await userManager.UpdateAsync(user);
 
@@ -49,7 +51,7 @@ namespace NoSQL.Controllers
         {
             User user = await userManager.GetUserAsync(HttpContext.User);
             var noteToBeUpdated = user.Notes.FirstOrDefault(x => x.Id == id);
-            noteToBeUpdated = note;
+            noteToBeUpdated.Text = note.Text;
 
             await userManager.UpdateAsync(user);
 
@@ -60,14 +62,15 @@ namespace NoSQL.Controllers
         public async Task<IActionResult> Delete(string id)
         {
             User user = await userManager.GetUserAsync(HttpContext.User);
-            var deleted = user.Notes.Remove(new Note { Id = id });
+            var itemToBeRemoved = user.Notes.FirstOrDefault(x => x.Id == id);
+            var deleted = user.Notes.Remove(itemToBeRemoved);
 
-            if (deleted)
-                return Ok();
+            if (!deleted)
+                return NoContent();
 
             await userManager.UpdateAsync(user);
 
-            return NoContent();
+            return Ok();
         }
     }
 }

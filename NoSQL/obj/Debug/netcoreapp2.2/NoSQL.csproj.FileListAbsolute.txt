@@ -12,3 +12,17 @@ C:\Users\fedoryshchev\source\repos\NoSQL\NoSQL\obj\Debug\netcoreapp2.2\NoSQL.Ass
 C:\Users\fedoryshchev\source\repos\NoSQL\NoSQL\obj\Debug\netcoreapp2.2\NoSQL.RazorTargetAssemblyInfo.cache
 C:\Users\fedoryshchev\source\repos\NoSQL\NoSQL\obj\Debug\netcoreapp2.2\NoSQL.dll
 C:\Users\fedoryshchev\source\repos\NoSQL\NoSQL\obj\Debug\netcoreapp2.2\NoSQL.pdb
+D:\Projects\NoSQL\NoSQL\bin\Debug\netcoreapp2.2\NoSQL.deps.json
+D:\Projects\NoSQL\NoSQL\bin\Debug\netcoreapp2.2\NoSQL.runtimeconfig.json
+D:\Projects\NoSQL\NoSQL\bin\Debug\netcoreapp2.2\NoSQL.runtimeconfig.dev.json
+D:\Projects\NoSQL\NoSQL\bin\Debug\netcoreapp2.2\NoSQL.dll
+D:\Projects\NoSQL\NoSQL\bin\Debug\netcoreapp2.2\NoSQL.pdb
+D:\Projects\NoSQL\NoSQL\obj\Debug\netcoreapp2.2\NoSQL.csprojAssemblyReference.cache
+D:\Projects\NoSQL\NoSQL\obj\Debug\netcoreapp2.2\NoSQL.csproj.CoreCompileInputs.cache
+D:\Projects\NoSQL\NoSQL\obj\Debug\netcoreapp2.2\NoSQL.RazorAssemblyInfo.cache
+D:\Projects\NoSQL\NoSQL\obj\Debug\netcoreapp2.2\NoSQL.RazorAssemblyInfo.cs
+D:\Projects\NoSQL\NoSQL\obj\Debug\netcoreapp2.2\NoSQL.AssemblyInfoInputs.cache
+D:\Projects\NoSQL\NoSQL\obj\Debug\netcoreapp2.2\NoSQL.AssemblyInfo.cs
+D:\Projects\NoSQL\NoSQL\obj\Debug\netcoreapp2.2\NoSQL.RazorTargetAssemblyInfo.cache
+D:\Projects\NoSQL\NoSQL\obj\Debug\netcoreapp2.2\NoSQL.dll
+D:\Projects\NoSQL\NoSQL\obj\Debug\netcoreapp2.2\NoSQL.pdb

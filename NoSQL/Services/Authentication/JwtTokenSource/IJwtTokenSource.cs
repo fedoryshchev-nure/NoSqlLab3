@@ -2,6 +2,6 @@
 {
     public interface IJwtTokenSource
     {
-        string Token { get; }
+        string Get(string id);
     }
 }

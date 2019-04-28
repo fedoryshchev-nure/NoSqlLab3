@@ -50,7 +50,8 @@ namespace NoSQL.Controllers
             if (!result.Succeeded)
                 throw new Exception();
 
-            return Ok(tokenSource.Token);
+            var user = await userManager.FindByEmailAsync(dto.Email);
+            return Ok(tokenSource.Get(user.Id));
         }
     }
 }
