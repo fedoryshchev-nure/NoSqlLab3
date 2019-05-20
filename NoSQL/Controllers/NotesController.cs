@@ -26,13 +26,14 @@ namespace NoSQL.Controllers
         }
 
         [HttpGet("{includeAll}")]
-        public async Task<ActionResult<IEnumerable<User>>> Get(bool includeAll = false)
+        public async Task<ActionResult<IEnumerable<Note>>> Get(bool includeAll = false)
         {
             IEnumerable<User> users = includeAll ? 
                 await userCollection.GetAllAsync() :
                 new List<User> { await userManager.GetUserAsync(User) };
+            IEnumerable<Note> notes = users.SelectMany(x => x.Notes);
 
-            return Ok(users);
+            return Ok(notes);
         }
 
         [HttpPost]

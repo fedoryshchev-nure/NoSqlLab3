@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using NoSQL.Entities;
@@ -43,7 +44,7 @@ namespace NoSQL.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<string>> Login([FromBody]LoginDTO dto)
+        public async Task<ActionResult<AuthenticationToken>> Login([FromBody]LoginDTO dto)
         {
             var result = await signInManager.PasswordSignInAsync(dto.Email, dto.Password, false, false);
 
@@ -51,7 +52,8 @@ namespace NoSQL.Controllers
                 throw new Exception();
 
             var user = await userManager.FindByEmailAsync(dto.Email);
-            return Ok(tokenSource.Get(user.Id));
+            var token = new AuthenticationToken { Value = tokenSource.Get(user.Id) };
+            return Ok(token);
         }
     }
 }
