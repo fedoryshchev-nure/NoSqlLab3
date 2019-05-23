@@ -72,6 +72,18 @@ namespace NoSQL
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
+            services.AddCors(options =>
+            {
+                options.AddPolicy("EnableCORS", builder =>
+                {
+                    builder.AllowAnyOrigin()
+                        .AllowAnyHeader()
+                        .AllowAnyMethod()
+                        .AllowCredentials()
+                        .Build();
+                });
+            });
+
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1.0", new Info { Title = "OOEC API v1.0", Version = "v1.0" });
@@ -111,6 +123,8 @@ namespace NoSQL
                 c.SwaggerEndpoint("/swagger/v1.0/swagger.json", "OOEC API v1.0");
                 c.RoutePrefix = string.Empty;
             });
+
+            app.UseCors("EnableCORS");
 
             app.UseMvc();
         }
