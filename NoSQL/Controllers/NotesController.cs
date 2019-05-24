@@ -8,6 +8,9 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using NoSQL.Entities;
+using NoSQL.QuerySettings;
+using NoSQL.QuerySettings.Specification;
+using NoSQL.Specification.NoteSpecification;
 
 namespace NoSQL.Controllers
 {
@@ -36,19 +39,33 @@ namespace NoSQL.Controllers
             return Ok(notes);
         }
 
+        [HttpPost("specific")]
+        public async Task<ActionResult<IEnumerable<Note>>> GetSpecificAsync([FromBody]Settings<Note> settings)
+        {
+            settings.Filtering = new AndSpecification<Note>(
+                    new NameContainsSpecification(settings.FilteringParams.Name),
+                    new TextContainsSpecification(settings.FilteringParams.Text));
+            var users = await userCollection.GetAllAsync();
+            var notes = users.SelectMany(x => x.Notes)
+                .ApplySettinigs(settings);
+
+            return Ok(notes);
+        }
+
         [HttpPost]
-        public async Task<ActionResult<User>> Post([FromBody]Note note)
+        public async Task<ActionResult<Note>> Post([FromBody]Note note)
         {
             User user = await userManager.GetUserAsync(HttpContext.User);
             note.Id = Guid.NewGuid().ToString();
             user.Notes.Add(note);
+
             await userManager.UpdateAsync(user);
 
-            return Ok(user);
+            return Ok(note);
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult<User>> Put(string id, [FromBody]Note note)
+        public async Task<ActionResult<Note>> Put(string id, [FromBody]Note note)
         {
             User user = await userManager.GetUserAsync(HttpContext.User);
             var noteToBeUpdated = user.Notes.FirstOrDefault(x => x.Id == id);
@@ -56,7 +73,7 @@ namespace NoSQL.Controllers
 
             await userManager.UpdateAsync(user);
 
-            return Ok(user);
+            return Ok(noteToBeUpdated);
         }
 
         [HttpDelete("{id}")]
